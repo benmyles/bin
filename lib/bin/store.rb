@@ -19,7 +19,7 @@ module Bin
       @expires_in ||= options[:expires_in] || 1.year
     end
 
-    def write(key, value, options={})
+    def write_entry(key, value, options={})
       key = key.to_s
       super do
         expires = Time.now.utc + ((options && options[:expires_in]) || expires_in)
@@ -30,7 +30,7 @@ module Bin
       end
     end
 
-    def read(key, options=nil)
+    def read_entry(key, options=nil)
       super do
         if doc = collection.find_one(:_id => key.to_s, :expires_at => {'$gt' => Time.now.utc})
           doc['raw'] ? doc['value'] : Marshal.load(doc['value'].to_s)
@@ -38,7 +38,7 @@ module Bin
       end
     end
 
-    def delete(key, options=nil)
+    def delete_entry(key, options=nil)
       super do
         collection.remove(:_id => key.to_s)
       end
