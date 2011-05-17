@@ -12,17 +12,17 @@ module Bin
 
   if ActiveSupport::VERSION::STRING < '3'
     class Compatibility
-      def write_entry(key, value, options=nil, &block)
+      def write(key, value, options=nil, &block)
         super(key, value, options)
         yield
       end
 
-      def read_entry(key, options=nil, &block)
+      def read(key, options=nil, &block)
         super
         yield
       end
 
-      def delete_entry(key, options=nil, &block)
+      def delete(key, options=nil, &block)
         super
         yield
       end
