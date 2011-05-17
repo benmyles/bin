@@ -1,10 +1,18 @@
 # encoding: UTF-8
 module Bin
   class Store < Compatibility
-    attr_reader :collection, :options
+    attr_reader :options
 
     def initialize(collection, options={})
       @collection, @options = collection, options
+    end
+    
+    def collection
+      if @collection.is_a?(Proc)
+        @collection = @collection.call
+      else
+        @collection
+      end
     end
 
     def expires_in
