@@ -39,27 +39,19 @@ module Bin
     end
 
     def delete_matched(matcher, options=nil)
-      super do
-        collection.remove(:_id => matcher)
-      end
+      collection.remove(:_id => matcher)
     end
 
     def exist?(key, options=nil)
-      super do
-        !read(key, options).nil?
-      end
+      !read(key, options).nil?
     end
 
     def increment(key, amount=1)
-      super do
-        counter_key_upsert(key, amount)
-      end
+      counter_key_upsert(key, amount)
     end
 
     def decrement(key, amount=1)
-      super do
-        counter_key_upsert(key, -amount.abs)
-      end
+      counter_key_upsert(key, -amount.abs)
     end
 
     def clear
